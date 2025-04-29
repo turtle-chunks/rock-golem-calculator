@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Ore Drop Rate Calculator</title>
+  <title>Beaver Log & Drop Rate Calculator</title>
   <script src="jspsych/jspsych.js"></script>
   <script src="jspsych/plugin-html-keyboard-response.js"></script>
   <script src="jspsych/plugin-survey-html-form.js"></script>
   <script src="jspsych/plugin-call-function.js"></script>
   <link href="jspsych/jspsych.css" rel="stylesheet" type="text/css" />
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
     body {
       background: url('imgs/old-school-runescape-map.jpg') no-repeat center center fixed;
       background-size: cover;
     }
-    #jspsych-target { position: relative; height: 100%; }
+    #jspsych-target {
+      position: relative;
+      height: 100%;
+    }
     .instruction-dialog {
       background-color: rgba(255, 255, 255, 0.9);
       padding: 20px;
@@ -22,76 +29,121 @@
       margin: 40px auto;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
-    .side-image { width: 200px; height: auto; }
-    .left-image { transform: scaleX(-1); margin-right: 20px; }
-    .right-image { margin-left: 20px; }
-    .instruction-content { font-size: 1.1em; text-align: center; color: #000; }
-    .instruction-dialog p { margin: 0.8em 0; }
-    .instruction-dialog input, .instruction-dialog select {
-      padding: 5px; font-size: 1em; margin-top: 5px; width: 100%; max-width: 200px;
+    .side-image {
+      width: 200px;
+      height: auto;
     }
-    .item-entry { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
-    .item-label { display: flex; align-items: center; gap: 6px; min-width: 200px; text-align: right; justify-content: flex-end; }
-    .item-icon { width: 32px; height: 32px; object-fit: contain; }
-    .results-table { width: 100%; border-collapse: collapse; margin-top: 1em; }
-    .results-table th, .results-table td {
-      border: 1px solid #bbb; padding: 6px; font-size: 0.95em;
+    .left-image {
+      transform: scaleX(-1);
+      margin-right: 20px;
     }
-    .results-table th { background: #eee; }
+    .right-image {
+      margin-left: 20px;
+    }
+    .instruction-content {
+      font-size: 1.1em;
+      text-align: center;
+      color: #000;
+    }
+    .instruction-dialog p {
+      margin: 0.8em 0;
+    }
+    .instruction-dialog input,
+    .instruction-dialog select {
+      padding: 5px;
+      font-size: 1em;
+      margin-top: 5px;
+      width: 100%;
+      max-width: 200px;
+    }
+    .item-entry {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .item-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 200px;
+      text-align: right;
+      justify-content: flex-end;
+    }
+    .item-icon {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+    .results-table th,
+    .results-table td {
+      border: 1px solid #bbb;
+      padding: 6px;
+      font-size: 0.95em;
+    }
+    .results-table th {
+      background: #eee;
+    }
   </style>
   <script>
     const createInstructionDialog = content => `
       <div style="display: flex; align-items: center; justify-content: center;">
-        <img class="side-image left-image" src="imgs/rock golem.png" alt="Beaver">
+        <img class="side-image left-image" src="imgs/Beaver.png" alt="Beaver">
         <div class="instruction-dialog">
           <div class="instruction-content">
             ${content}
           </div>
         </div>
-        <img class="side-image right-image" src="imgs/rock golem.png" alt="Beaver">
+        <img class="side-image right-image" src="imgs/Beaver.png" alt="Beaver">
       </div>
     `;
 
     const jsPsych = initJsPsych();
 
     const averageDropRates = {
-      "Clay": 1.34844E-06,
-      "Copper ore": 1.34844E-06,
-      "Tin ore": 1.34844E-06,
-      "Iron ore": 1.34844E-06,
-      "Silver ore": 1.34844E-06,
-      "Coal": 3.44068E-06,
-      "Gold ore": 3.37109E-06,
-      "Mithril ore": 6.74218E-06,
-      "Adamantire ore": 1.68554E-05,
-      "Runite ore": 2.35977E-05,
-      "Blurite ore": 1.34844E-06,
-      "Barronite": 1.34844E-06,
-      "Lovakite ore": 4.07229E-06,
-      "Gem rock": 4.71952E-06,
-      "Amethyst crystals": 2.1575E-05,
-      "Crashed star": 1.91736E-06,
-      "Motherload mine": 4.04531E-06,
-      "Limestone": 1.34844E-06,
-      "Calcified rocks": 1.34844E-06,
-      "Sandstone": 1.34844E-06,
-      "Granite": 1.34844E-06,
-      "Ash Pile": 1.34844E-06,
-      "Volcanic sulphur": 1.40845E-06,
-      "Volcanic mine": 1.66667E-05,
-      "Blast mine": 8.09061E-06
-    };
+  "Clay": 1.35e-06,
+  "Copper ore": 1.35e-06,
+  "Tin ore": 1.35e-06,
+  "Iron ore": 1.35e-06,
+  "Silver ore": 1.35e-06,
+  "Coal": 3.47e-06,
+  "Gold ore": 3.4e-06,
+  "Mithril ore": 6.86e-06,
+  "Adamantire ore": 1.759e-05,
+  "Runite ore": 2.506e-05,
+  "Blurite ore": 1.35e-06,
+  "Barronite": 1.35e-06,
+  "Lovakite ore": 4.11e-06,
+  "Gem rock": 4.78e-06,
+  "Amethyst crystals": 2.279e-05,
+  "Crashed star": 1.93e-06,
+  "Motherload mine": 4.09e-06,
+  "Limestone": 1.35e-06,
+  "Calcified rocks": 1.35e-06,
+  "Sandstone": 1.35e-06,
+  "Granite": 1.35e-06,
+  "Ash Pile": 1.35e-06,
+  "Volcanic sulphur": 1.41e-06,
+  "Volcanic mine": 1.738e-05,
+  "Blast mine": 8.26e-06
+};
 
     let calculationResults;
     let beaverChance;
 
-    const sortedItems = Object.keys(averageDropRates);
+    const sortedItems = Object.keys(averageDropRates); // .sort() for alphabetical ordering
 
     const combined_input_trial = {
       type: jsPsychSurveyHtmlForm,
       html: createInstructionDialog(`
-        <p><strong>Welcome to the Ore Drop Rate Calculator.</strong></p>
-        <p>Enter the number of each type of ore you mined.</p>
+        <p><strong>Welcome to the Beaver Drop Rate Calculator.</strong></p>
+        <p>Enter the number of each type of log you collected.</p>
         ${sortedItems.map(item => `
           <div class="item-entry">
             <span class="item-label">
@@ -137,9 +189,9 @@
         }
         let table = `<table class="results-table">
           <tr>
-            <th>Ore Type</th>
+            <th>Log Type</th>
             <th>Count</th>
-            <th>Chance (per ore)</th>
+            <th>Beaver Chance (per log)</th>
           </tr>`;
         for (const item of Object.keys(calculationResults)) {
           const stats = calculationResults[item];
@@ -152,9 +204,9 @@
         }
         table += `</table>`;
         return createInstructionDialog(`
-          <p><strong>Here are your mining results:</strong></p>
+          <p><strong>Here are your beaver hunting results:</strong></p>
           ${table}
-          <p><strong>Your Total Pet Chance Score: <span style="color:red;">${beaverChance.toFixed(2)}</span></strong></p>
+          <p><strong>Your Total Beaver Chance Score: <span style="color:red;">${beaverChance.toFixed(2)}</strong></p>
           <p><strong>To do another calculation, refresh this page (F5).</strong></p>
         `);
       }
