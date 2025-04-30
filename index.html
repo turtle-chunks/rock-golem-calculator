@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Beaver Log & Drop Rate Calculator</title>
+  <title>Rock Golem Ore & Drop Rate Calculator</title>
   <script src="jspsych/jspsych.js"></script>
   <script src="jspsych/plugin-html-keyboard-response.js"></script>
   <script src="jspsych/plugin-survey-html-form.js"></script>
@@ -135,15 +135,15 @@
 };
 
     let calculationResults;
-    let beaverChance;
+    let rockgolemChance;
 
     const sortedItems = Object.keys(averageDropRates); // .sort() for alphabetical ordering
 
     const combined_input_trial = {
       type: jsPsychSurveyHtmlForm,
       html: createInstructionDialog(`
-        <p><strong>Welcome to the Beaver Drop Rate Calculator.</strong></p>
-        <p>Enter the number of each type of log you collected.</p>
+        <p><strong>Welcome to the Rock Golem Drop Rate Calculator.</strong></p>
+        <p>Enter the number of each type of Ore you collected.</p>
         ${sortedItems.map(item => `
           <div class="item-entry">
             <span class="item-label">
@@ -167,13 +167,13 @@
         for (const item of Object.keys(averageDropRates)) {
           const count = parseFloat(resp[item]) || 0;
           if (count > 0) {
-            const itemBeaverChance = count * averageDropRates[item];
-            results[item] = { count, itemBeaverChance };
-            sum += itemBeaverChance;
+            const itemrockgolemChance = count * averageDropRates[item];
+            results[item] = { count, itemrockgolemChance };
+            sum += itemrockgolemChance;
           }
         }
         calculationResults = results;
-        beaverChance = sum;
+        rockgolemChance = sum;
       }
     };
 
@@ -189,9 +189,9 @@
         }
         let table = `<table class="results-table">
           <tr>
-            <th>Log Type</th>
+            <th>Ore Type</th>
             <th>Count</th>
-            <th>Beaver Chance (per log)</th>
+            <th>rock golem Chance (per Ore)</th>
           </tr>`;
         for (const item of Object.keys(calculationResults)) {
           const stats = calculationResults[item];
@@ -199,14 +199,14 @@
             <tr>
               <td><span class="item-label"><img class="item-icon" src="imgs/${item}.png" alt="${item}"> ${item}</span></td>
               <td>${stats.count}</td>
-              <td>${stats.itemBeaverChance.toFixed(2)}</td>
+              <td>${stats.itemrockgolemChance.toFixed(2)}</td>
             </tr>`;
         }
         table += `</table>`;
         return createInstructionDialog(`
-          <p><strong>Here are your beaver hunting results:</strong></p>
+          <p><strong>Here are your rock golem hunting results:</strong></p>
           ${table}
-          <p><strong>Your Total Beaver Chance Score: <span style="color:red;">${beaverChance.toFixed(2)}</strong></p>
+          <p><strong>Your Total rock golem Chance Score: <span style="color:red;">${rockgolemChance.toFixed(2)}</strong></p>
           <p><strong>To do another calculation, refresh this page (F5).</strong></p>
         `);
       }
